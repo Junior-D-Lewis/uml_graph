@@ -1,20 +1,19 @@
 package fr.lernejo.umlgrapher;
 
-public class UmlGraph {
-    final Class  maClass;
+import java.lang.reflect.Modifier;
 
-    public UmlGraph(Class maClass) {
-        this.maClass = maClass;
+public class UmlGraph {
+
+    public UmlGraph(Class[] mesClass) {
+        this.mesClass = mesClass;
     }
     public final String as(GraphType graphType) {
-        String res = "";
-        if(graphType==GraphType.Mermaid) {
-            res = "" + "classDiagram\n" +
-                this.maClass.getClass().getSimpleName().toLowerCase() + " " +  this.maClass.getSimpleName() + " {\n" +
-                "    <<interface>>\n" +
-                "}\n" +
-                "";
+        String format = "";
+        if (graphType == GraphType.Mermaid) {
+            InternalGraphRepresentation graph = new InternalGraphRepresentation(mesClass);
+            format = new MermaidFormatter().format(graph);
         }
-        return res;
+        return format;
     }
+    final Class[] mesClass;
 }
