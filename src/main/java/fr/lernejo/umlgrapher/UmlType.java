@@ -1,12 +1,13 @@
 package fr.lernejo.umlgrapher;
 
+import org.reflections.Reflections;
+import org.reflections.scanners.Scanners;
+import org.reflections.util.ConfigurationBuilder;
+
 import java.util.Comparator;
 import java.util.Set;
 import java.util.TreeSet;
 
-/**
- * Use to manage class et super base on the classe to give
- */
 public class UmlType {
 
     public UmlType(Class[] mesClass) {
@@ -28,8 +29,22 @@ public class UmlType {
         for (Class interfass : clazz.getInterfaces()) {
             getParents(interfass);
         }
-
+        this.getChildren(clazz);
         types.add(clazz);
+    }
+    private void getChildren(Class clazz) {
+        Reflections reflections = new Reflections(new ConfigurationBuilder()
+            .forPackage("")
+            .forPackage("", clazz.getClassLoader())
+        );
+        Set<Class<?>> subTypes = reflections.get(
+            Scanners.SubTypes
+                .get(clazz)
+                .asClass(this.getClass().getClassLoader(), clazz.getClassLoader())
+        );
+        for (Class cls : subTypes) {
+            if (!types.contains(cls)) types.add(cls);
+        }
     }
 
     public Set<Class> getTypes() {

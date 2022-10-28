@@ -10,8 +10,8 @@ public class UmlGraph {
     public final String as(GraphType graphType) {
         String format = "";
         if (graphType == GraphType.Mermaid) {
-            InternalGraphRepresentation graph = new InternalGraphRepresentation(mesClass);
-            format = new MermaidFormatter().format(graph);
+            InternalGraphRepresentation internalGraphRepresentation = new InternalGraphRepresentation(mesClass);
+            format = new MermaidFormatter().format(internalGraphRepresentation);
         }
         return format;
     }
