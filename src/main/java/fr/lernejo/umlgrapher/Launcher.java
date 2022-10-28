@@ -12,15 +12,23 @@ public class Launcher implements Callable<Integer> {
 
     @Override
     public Integer call() {
-        UmlGraph graph = new UmlGraph(clazz);
-        String res = graph.as(graphType);
-        System.out.println(res);
+        try {
+            UmlGraph graph = new UmlGraph(clazz);
+            String res = graph.as(graphType);
+            System.out.println(res);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
         return 0;
     }
 
     public static void main(String... args) {
-        int exitCode = new CommandLine(new Launcher()).execute(args);
-        System.exit(exitCode);
+       try {
+           int exitCode = new CommandLine(new Launcher()).execute(args);
+           System.exit(exitCode);
+       }catch (Exception e){
+           System.out.println(e.getMessage());
+       }
     }
     private final GraphType graphType = GraphType.Mermaid;
 }
