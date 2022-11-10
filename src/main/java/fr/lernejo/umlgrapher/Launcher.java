@@ -6,10 +6,6 @@ import picocli.CommandLine.Option;
 import java.util.concurrent.Callable;
 
 public class Launcher implements Callable<Integer> {
-    @Option(names = {"-c", "--classes"}, description = "renseigner les classes d'où faire partir l'analyse", required = true)
-    private final Class[] clazz = null;
-    @Option(names = {"-g", "--graph-type"}, description = "sélectionner le type de graph que l'on souhaite en sortie ")
-
     @Override
     public Integer call() {
         try {
@@ -30,5 +26,8 @@ public class Launcher implements Callable<Integer> {
            System.out.println(e.getMessage());
        }
     }
+    @Option(names = {"-c", "--classes"}, description = "renseigner les classes d'où faire partir l'analyse", required = true)
+    private final Class[] clazz = null;
+    @Option(names = {"-g", "--graph-type"}, description = "sélectionner le type de graph que l'on souhaite en sortie ")
     private final GraphType graphType = GraphType.Mermaid;
 }
